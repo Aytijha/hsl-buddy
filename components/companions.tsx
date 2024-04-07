@@ -27,7 +27,7 @@ export const Companions = ({
             alt="Empty"
           />
         </div>
-        <p className="text-sm text-muted-foreground">No companions found.</p>
+        <p className="text-sm text-muted-foreground">No buddies found.</p>
       </div>
     )
   }
