@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 import {
   Dialog,
@@ -11,62 +10,39 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { useProModal } from "@/hooks/use-pro-modal";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { useToast } from "@/components/ui/use-toast";
+import { useDemoModal } from "@/hooks/use-demo-modal";
 
-export const ProModal = () => {
-  const proModal = useProModal();
+export const DemoModal = () => {
+  const demoModal = useDemoModal();
   const [isMounted, setIsMounted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const { toast } = useToast();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
-
-  const onSubscribe = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get("/api/stripe");
-
-      window.location.href = response.data.url;
-    } catch (error) {
-      toast({
-        description: "Something went wrong",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  }
 
   if (!isMounted) {
     return null;
   }
 
   return (
-    <Dialog open={proModal.isOpen} onOpenChange={proModal.onClose}>
+    <Dialog open={demoModal.isOpen} onOpenChange={demoModal.onClose}>
       <DialogContent>
         <DialogHeader className="space-y-4">
           <DialogTitle className="text-center">
-            Upgrade to Pro
+            Disabled
           </DialogTitle>
           <DialogDescription className="text-center space-y-2">
-            Create
-            <span className="text-sky-500 mx-1 font-medium">Custom AI</span>
-            Study Buddies!
+            Hi, I had to disable creation of new companions to avoid spam.
+            <br />
+            To test companion creation, clone the repository from master branch :)
           </DialogDescription>
         </DialogHeader>
         <Separator />
-        <div className="flex justify-between">
-          <p className="text-2xl font-medium">
-            $9<span className="text-sm font-normal">.99 / mo</span>
-          </p>
-          <Button onClick={onSubscribe} disabled={loading} variant="premium">
-            Subscribe
+        <div className="flex justify-center">
+          <Button onClick={demoModal.onClose}>
+            I Understand
           </Button>
         </div>
       </DialogContent>

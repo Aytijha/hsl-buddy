@@ -28,7 +28,7 @@ export default function RootLayout({
         <body className={cn("bg-secondary", inter.className)}>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <ProModal />
-            <DemoModal />
+            {/* <DemoModal /> */}
             {children}
             <Toaster />
           </ThemeProvider>
