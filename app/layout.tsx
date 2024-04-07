@@ -6,7 +6,6 @@ import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/toaster';
 import { ProModal } from '@/components/pro-modal';
-import { DemoModal } from '@/components/demo-modal';
 
 import './globals.css'
 
@@ -14,7 +13,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'HSL-buddy',
-  description: 'Your AI buddy for HyperSkills-Lab.',
+  description: 'Your AI buddy from HyperSkills Lab.',
 }
 
 export default function RootLayout({
@@ -28,7 +27,6 @@ export default function RootLayout({
         <body className={cn("bg-secondary", inter.className)}>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <ProModal />
-            {/* <DemoModal /> */}
             {children}
             <Toaster />
           </ThemeProvider>

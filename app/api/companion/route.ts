@@ -6,8 +6,6 @@ import { checkSubscription } from "@/lib/subscription";
 
 export async function POST(req: Request) {
   try {
-    // return new NextResponse("Disabled for demo, clone from master to try it out", { status: 500 });
-
     const body = await req.json();
     const user = await currentUser();
     const { src, name, description, instructions, seed, categoryId } = body;

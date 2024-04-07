@@ -45,7 +45,7 @@ export async function GET() {
           price_data: {
             currency: "USD",
             product_data: {
-              name: "Buddy Pro",
+              name: "HyperSkills Lab Pro",
               description: "Create Custom AI HSL-Buddy"
             },
             unit_amount: 999,
@@ -63,7 +63,7 @@ export async function GET() {
 
     return new NextResponse(JSON.stringify({ url: stripeSession.url }))
   } catch (error) {
-    console.log("HEREEEE [STRIPE]", error);
+    console.log("[STRIPE]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 };
