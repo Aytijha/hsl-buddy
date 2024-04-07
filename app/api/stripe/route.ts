@@ -1,3 +1,5 @@
+export const dynamic = 'no';
+
 import { auth, currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
@@ -6,7 +8,6 @@ import { stripe } from "@/lib/stripe";
 import { absoluteUrl } from "@/lib/utils";
 
 const settingsUrl = absoluteUrl("/settings");
-export const dynamic = 'no';
 
 export async function GET() {
   try {
