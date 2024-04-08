@@ -16,20 +16,28 @@ export async function POST(
   { params }: { params: { chatId: string } }
 ) {
   try {
+    console.log("Inside route")
     const { prompt } = await request.json();
+    console.log("Extracted ChatId")
     const user = await currentUser();
-
+    console.log("Extracted current user")
+    
+    console.log("Checking if valid user requested API")
     if (!user || !user.firstName || !user.id) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-
+    
+    console.log("Dunno whats happening but something with the url")
     const identifier = request.url + "-" + user.id;
+    console.log("Dunno whats happening but something with the url..." , identifier)
     const { success } = await rateLimit(identifier);
-
+    console.log("Dunno whats happening but something with Ratelimiter..." , success)
+    
     if (!success) {
       return new NextResponse("Rate limit exceeded", { status: 429 });
     }
-
+    
+    console.log("Getting companion details from Prisma")
     const companion = await prismadb.companion.update({
       where: {
         id: params.chatId
@@ -44,22 +52,26 @@ export async function POST(
         },
       }
     });
-
+    console.log("Companion details: ", companion)
+    
     if (!companion) {
       return new NextResponse("HSL-buddy not found", { status: 404 });
     }
-
+    
     const name = companion.id;
     const companion_file_name = name + ".txt";
-
+    
     const companionKey = {
       companionName: name!,
       userId: user.id,
       modelName: "llama2-13b",
     };
+    console.log("Companion key details: ", companionKey)
     const memoryManager = await MemoryManager.getInstance();
-
+    console.log("Dunno what this is, but something to do with MemoryManager (Pinecone)... ", memoryManager)
+    
     const records = await memoryManager.readLatestHistory(companionKey);
+    console.log("Records: ", records)
     if (records.length === 0) {
       await memoryManager.seedChatHistory(companion.seed, "\n\n", companionKey);
     }
