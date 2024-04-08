@@ -35,21 +35,25 @@ export class MemoryManager {
     companionFileName: string
   ) {
     const Pinecone = <Pinecone>this.vectorDBClient;
-
+    console.log("Inside vector Search")
+    
     const pineconeIndex = Pinecone.Index(
       process.env.PINECONE_INDEX! || ""
     );
-
+    console.log("Index name: ", pineconeIndex)
+    
     const vectorStore = await PineconeStore.fromExistingIndex(
       new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY }),
       { pineconeIndex }
     ); 
-
+    console.log("VectorStore: ", vectorStore)
+    
     const similarDocs = await vectorStore
-      .similaritySearch(recentChatHistory, 3, { fileName: companionFileName })
-      .catch((err) => {
-        console.log("WARNING: failed to get vector search results.", err);
-      });
+    .similaritySearch(recentChatHistory, 3, { fileName: companionFileName })
+    .catch((err) => {
+      console.log("WARNING: failed to get vector search results.", err);
+    });
+    console.log("Similar Docs: ", similarDocs)
     return similarDocs;
   }
 

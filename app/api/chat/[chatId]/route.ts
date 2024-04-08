@@ -57,23 +57,17 @@ export async function POST(
       userId: user.id,
       modelName: "llama2-13b",
     };
-    console.log("Companion key details: ", companionKey)
+    
     const memoryManager = await MemoryManager.getInstance();
-    console.log("Dunno what this is, but something to do with MemoryManager (Pinecone)... ", memoryManager)
     
     const records = await memoryManager.readLatestHistory(companionKey);
     if (records.length === 0) {
-      console.log("Seeding Chat History")
       await memoryManager.seedChatHistory(companion.seed, "\n\n", companionKey);
     }
-    console.log("Updating Chat History")
     await memoryManager.writeToHistory("User: " + prompt + "\n", companionKey);
     
     // Query Pinecone
-    
-    console.log("Reading Chat History")
     const recentChatHistory = await memoryManager.readLatestHistory(companionKey);
-    console.log("Chat History: ", recentChatHistory)
     
     // Right now the preamble is included in the similarity search, but that
     // shouldn't be an issue
