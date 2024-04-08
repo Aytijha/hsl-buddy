@@ -16,22 +16,15 @@ export async function POST(
   { params }: { params: { chatId: string } }
 ) {
   try {
-    console.log("Inside route")
     const { prompt } = await request.json();
-    console.log("Extracted ChatId")
     const user = await currentUser();
-    console.log("Extracted current user")
     
-    console.log("Checking if valid user requested API")
     if (!user || !user.firstName || !user.id) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
     
-    console.log("Dunno whats happening but something with the url")
     const identifier = request.url + "-" + user.id;
-    console.log("Dunno whats happening but something with the url..." , identifier)
     const { success } = await rateLimit(identifier);
-    console.log("Dunno whats happening but something with Ratelimiter..." , success)
     
     if (!success) {
       return new NextResponse("Rate limit exceeded", { status: 429 });
