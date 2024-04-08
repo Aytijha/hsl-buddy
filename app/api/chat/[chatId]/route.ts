@@ -98,7 +98,7 @@ export async function POST(
 
     const resp = String(
       await model
-        .call(
+        .invoke(
           `
         ONLY generate plain sentences without prefix of who is speaking. DO NOT use ${companion.name}: prefix. 
 
