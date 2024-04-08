@@ -55,6 +55,8 @@ export const ImageUpload = ({
               src={value || "/placeholder.svg"}
               className="rounded-lg object-cover"
             />
+            console.log(value);
+            
           </div>
         </div>
       </CldUploadButton>
