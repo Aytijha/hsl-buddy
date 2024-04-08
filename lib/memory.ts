@@ -38,7 +38,8 @@ export class MemoryManager {
     console.log("Inside vector Search")
     
     const pineconeIndex = Pinecone.Index(
-      process.env.PINECONE_INDEX! || ""
+      process.env.PINECONE_INDEX! || "",
+      "https://companion-qq95te8.svc.gcp-starter.pinecone.io",
     );
     console.log("Index name: ", pineconeIndex)
     
