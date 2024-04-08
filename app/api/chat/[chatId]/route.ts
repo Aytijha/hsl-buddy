@@ -30,7 +30,6 @@ export async function POST(
       return new NextResponse("Rate limit exceeded", { status: 429 });
     }
     
-    console.log("Getting companion details from Prisma")
     const companion = await prismadb.companion.update({
       where: {
         id: params.chatId
@@ -45,7 +44,6 @@ export async function POST(
         },
       }
     });
-    console.log("Companion details: ", companion)
     
     if (!companion) {
       return new NextResponse("HSL-buddy not found", { status: 404 });
@@ -64,23 +62,28 @@ export async function POST(
     console.log("Dunno what this is, but something to do with MemoryManager (Pinecone)... ", memoryManager)
     
     const records = await memoryManager.readLatestHistory(companionKey);
-    console.log("Records: ", records)
     if (records.length === 0) {
+      console.log("Seeding Chat History")
       await memoryManager.seedChatHistory(companion.seed, "\n\n", companionKey);
     }
+    console.log("Updating Chat History")
     await memoryManager.writeToHistory("User: " + prompt + "\n", companionKey);
-
+    
     // Query Pinecone
-
+    
+    console.log("Reading Chat History")
     const recentChatHistory = await memoryManager.readLatestHistory(companionKey);
-
+    console.log("Chat History: ", recentChatHistory)
+    
     // Right now the preamble is included in the similarity search, but that
     // shouldn't be an issue
-
+    
+    console.log("Vector search...")
     const similarDocs = await memoryManager.vectorSearch(
       recentChatHistory,
       companion_file_name
     );
+    console.log("Vector search results: ", similarDocs)
 
     let relevantHistory = "";
     if (!!similarDocs && similarDocs.length !== 0) {
