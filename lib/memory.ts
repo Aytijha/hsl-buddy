@@ -1,5 +1,5 @@
 import { Redis } from "@upstash/redis";
-import { OpenAIEmbeddings } from "langchain/embeddings/openai";
+import { OpenAIEmbeddings } from "@langchain/openai";
 import { Pinecone } from "@pinecone-database/pinecone";
 import { PineconeStore } from "@langchain/pinecone";
 
@@ -35,13 +35,11 @@ export class MemoryManager {
     companionFileName: string
   ) {
     const Pinecone = <Pinecone>this.vectorDBClient;
-    console.log("Inside vector Search")
     
     const pineconeIndex = Pinecone.Index(
-      process.env.PINECONE_INDEX! || "",
+      process.env.PINECONE_INDEX!,
       "https://companion-qq95te8.svc.gcp-starter.pinecone.io",
     );
-    console.log("Index name: ", pineconeIndex)
     
     const vectorStore = await PineconeStore.fromExistingIndex(
       new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY }),
