@@ -68,6 +68,8 @@ export async function POST(
     // Query Pinecone
 
     const recentChatHistory = await memoryManager.readLatestHistory(companionKey);
+    
+    console.log(recentChatHistory)
 
     // Right now the preamble is included in the similarity search, but that
     // shouldn't be an issue
@@ -77,22 +79,29 @@ export async function POST(
       companion_file_name
     );
 
+    console.log(similarDocs)
+    
     let relevantHistory = "";
     if (!!similarDocs && similarDocs.length !== 0) {
       relevantHistory = similarDocs.map((doc) => doc.pageContent).join("\n");
     }
+    console.log("Relevant History: ", relevantHistory)
+    
     const { handlers } = LangChainStream();
+    console.log("handlers: ", handlers)
+    
     // Call Replicate for inference
     const model = new Replicate({
       model:
-        "lucataco/llama-2-13b-chat:18f253bfce9f33fe67ba4f659232c509fbdfb5025e5dbe6027f72eeb91c8624b",
+      "lucataco/llama-2-13b-chat:18f253bfce9f33fe67ba4f659232c509fbdfb5025e5dbe6027f72eeb91c8624b",
       input: {
         max_length: 2048,
       },
       apiKey: process.env.REPLICATE_API_TOKEN,
       callbackManager: CallbackManager.fromHandlers(handlers),
     });
-
+    console.log("model: ", model)
+    
     // Turn verbose on for debugging
     model.verbose = true;
 
@@ -112,6 +121,7 @@ export async function POST(
         )
         .catch(console.error)
     );
+    console.log("Resp: ", resp)
 
     const cleaned = resp.replaceAll(",", "");
     const chunks = cleaned.split("\n");

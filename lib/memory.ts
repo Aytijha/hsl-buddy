@@ -38,7 +38,6 @@ export class MemoryManager {
       process.env.PINECONE_INDEX! || ""
     );
 
-    console.log("Vectorstore")
     const vectorStore = await PineconeStore.fromExistingIndex(
       new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY }),
       { pineconeIndex }
