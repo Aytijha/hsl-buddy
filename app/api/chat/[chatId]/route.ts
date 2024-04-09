@@ -18,18 +18,18 @@ export async function POST(
   try {
     const { prompt } = await request.json();
     const user = await currentUser();
-    
+
     if (!user || !user.firstName || !user.id) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    
+
     const identifier = request.url + "-" + user.id;
     const { success } = await rateLimit(identifier);
-    
+
     if (!success) {
       return new NextResponse("Rate limit exceeded", { status: 429 });
     }
-    
+
     const companion = await prismadb.companion.update({
       where: {
         id: params.chatId
@@ -44,40 +44,38 @@ export async function POST(
         },
       }
     });
-    
+
     if (!companion) {
-      return new NextResponse("HSL-buddy not found", { status: 404 });
+      return new NextResponse("Companion not found", { status: 404 });
     }
-    
+
     const name = companion.id;
     const companion_file_name = name + ".txt";
-    
+
     const companionKey = {
       companionName: name!,
       userId: user.id,
       modelName: "llama2-13b",
     };
-    
     const memoryManager = await MemoryManager.getInstance();
-    
+
     const records = await memoryManager.readLatestHistory(companionKey);
     if (records.length === 0) {
       await memoryManager.seedChatHistory(companion.seed, "\n\n", companionKey);
     }
     await memoryManager.writeToHistory("User: " + prompt + "\n", companionKey);
-    
+
     // Query Pinecone
+
     const recentChatHistory = await memoryManager.readLatestHistory(companionKey);
-    
+
     // Right now the preamble is included in the similarity search, but that
     // shouldn't be an issue
-    
-    console.log("Vector search...")
+
     const similarDocs = await memoryManager.vectorSearch(
       recentChatHistory,
       companion_file_name
     );
-    console.log("Vector search results: ", similarDocs)
 
     let relevantHistory = "";
     if (!!similarDocs && similarDocs.length !== 0) {
@@ -87,7 +85,7 @@ export async function POST(
     // Call Replicate for inference
     const model = new Replicate({
       model:
-      "a16z-infra/llama-2-13b-chat:df7690f1994d94e96ad9d568eac121aecf50684a0b0963b25a41cc40061269e5",
+        "a16z-infra/llama-2-13b-chat:df7690f1994d94e96ad9d568eac121aecf50684a0b0963b25a41cc40061269e5",
       input: {
         max_length: 2048,
       },
@@ -100,7 +98,7 @@ export async function POST(
 
     const resp = String(
       await model
-        .invoke(
+        .call(
           `
         ONLY generate plain sentences without prefix of who is speaking. DO NOT use ${companion.name}: prefix. 
 
