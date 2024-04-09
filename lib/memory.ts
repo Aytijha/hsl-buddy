@@ -38,16 +38,19 @@ export class MemoryManager {
       process.env.PINECONE_INDEX! || ""
     );
 
+    console.log("Vectorstore")
     const vectorStore = await PineconeStore.fromExistingIndex(
       new OpenAIEmbeddings({ openAIApiKey: process.env.OPENAI_API_KEY }),
       { pineconeIndex }
     ); 
-
+    console.log("Vectorstore: ", vectorStore)
+    
     const similarDocs = await vectorStore
-      .similaritySearch(recentChatHistory, 3, { fileName: companionFileName })
-      .catch((err) => {
-        console.log("WARNING: failed to get vector search results.", err);
-      });
+    .similaritySearch(recentChatHistory, 3, { fileName: companionFileName })
+    .catch((err) => {
+      console.log("WARNING: failed to get vector search results.", err);
+    });
+    console.log("Similardocs: ", similarDocs)
     return similarDocs;
   }
 
