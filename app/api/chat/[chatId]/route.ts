@@ -63,7 +63,7 @@ export async function POST(
     if (records.length === 0) {
       await memoryManager.seedChatHistory(companion.seed, "\n\n", companionKey);
     }
-    await memoryManager.writeToHistory("User: " + prompt + "\n", companionKey);
+    await memoryManager.writeToHistory("User: " + "Hey do you believe in Singularity?" + "\n", companionKey);
 
     // Query Pinecone
 
