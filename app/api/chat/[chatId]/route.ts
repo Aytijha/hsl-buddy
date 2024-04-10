@@ -61,9 +61,9 @@ export async function POST(
 
     const records = await memoryManager.readLatestHistory(companionKey);
     if (records.length === 0) {
-      await memoryManager.seedChatHistory(companion.seed, "\n\n", companionKey);
+      await memoryManager.seedChatHistory(companion.seed, "\n\n ", companionKey);
     }
-    await memoryManager.writeToHistory("Human: " + prompt + "\n", companionKey);
+    await memoryManager.writeToHistory("Human: " + prompt + "\n ", companionKey);
 
     // Query Pinecone
 
@@ -105,6 +105,7 @@ export async function POST(
     // Turn verbose on for debugging
     model.verbose = true;
 
+    console.log("Calling Replicate model")
     const resp = String(
       await model
         .call(
