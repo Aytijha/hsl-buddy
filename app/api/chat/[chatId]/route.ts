@@ -108,7 +108,7 @@ export async function POST(
 
     const contentseed = "ONLY generate plain sentences without prefix of who is speaking. DO NOT use"+companion.name+": prefix. \n\n"+companion.instructions+"\n\n"+"Below are relevant details about "+companion.name+"'s past and the conversation you are in.\n\n"+recentChatHistory
     
-    console.log("Calling API route model")
+    console.log("Calling OpenAI API")
     const result = await callOpenAI3_5_turbo(process.env.OPENAI_API_KEY!, {
       "model": "gpt-3.5-turbo",
       "top_p": 0.95,
@@ -128,8 +128,7 @@ export async function POST(
     });
 
     const response = result['choices'][0]['message']['content'];
-    
-    console.log("Calling Replicate model")
+
     // const resp = String(
     //   await model
     //     .call(
