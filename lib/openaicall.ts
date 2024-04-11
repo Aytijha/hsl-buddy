@@ -1,5 +1,5 @@
 const callOpenAI3_5_turbo = async (token:string, body:any) => {
-    const response = await fetch("https://api.dev.surveill.ai/user/list", {
+    const response = await fetch("https://api.dev.surveill.ai/tenant/list", {
     method: "POST",
     headers: {
         Authorization: `Bearer ${token}`,
