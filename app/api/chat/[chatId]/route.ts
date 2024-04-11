@@ -106,20 +106,31 @@ export async function POST(
     // Turn verbose on for debugging
     model.verbose = true;
 
-    console.log(recentChatHistory)
     const contentseed = "ONLY generate plain sentences without prefix of who is speaking. DO NOT use"+companion.name+": prefix. \n\n"+companion.instructions+"\n\n"+"Below are relevant details about "+companion.name+"'s past and the conversation you are in.\n\n"+recentChatHistory
-    console.log(contentseed)
     
-    console.log("Calling Replicate model")
-    const result = await callOpenAI3_5_turbo("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjg1ODIxMywianRpIjoiNzVhMmU5YjgtNTQxNS00OWVjLThmZGQtOGRhZmUxOWMzYzc5IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3RfMTIzQG1haWxpbmF0b3IuY29tIiwibmJmIjoxNzEyODU4MjEzLCJjc3JmIjoiNmE3OGRjZjItN2EwYS00MTM3LWI2MzctMzliNWY0MTQ1OGM3IiwiZXhwIjoxNzEyODU5MTEzfQ.KOC6vR5uhc51ZUvJfzTkBDvs1KdrxzrGyCB5XihHP7k", {
-      "parentTenantId": 1710482887913,
-      "details": false
+    console.log("Calling API route model")
+    const result = await callOpenAI3_5_turbo(process.env.OPENAI_API_KEY!, {
+      "model": "gpt-3.5-turbo",
+      "top_p": 0.95,
+      "temperature": 0.75,
+      "max_tokens": 256,
+      "frequency_penalty": 1.1,
+      "messages": [
+        {
+          "role": "system",
+          "content": contentseed
+        },
+        {
+          "role": "user",
+          "content": prompt
+        }
+      ]
     });
-
+    
     const myData = result;  // Assign the data to a variable
     console.log("Data received:", myData);
-  
-    console.log("inside Replicate...")
+    
+    console.log("Calling Replicate model")
     const resp = String(
       await model
         .call(
