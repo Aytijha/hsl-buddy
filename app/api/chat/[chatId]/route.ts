@@ -108,12 +108,30 @@ export async function POST(
 
     
     console.log("Calling Replicate model")
-    const result = await callOpenAI3_5_turbo('abc', {
-          "bypass": {
-          "bypassAi": true,
-          "bypassTranslate": true
-          }
-      });
+    const result = await callOpenAI3_5_turbo(process.env.OPENAI_API_KEY!, {
+      "model": "gpt-3.5-turbo",
+      "top_p": 0.95,
+      "temperature": 0.75,
+      "max_tokens": 256,
+      "frequency_penalty": 1.1,
+      "messages": [
+        {
+          "role": "system",
+          "content": `ONLY generate plain sentences without prefix of who is speaking. DO NOT use ${companion.name}: prefix.
+          
+          ${companion.instructions}
+
+          Below are relevant details about ${companion.name}'s past and the conversation you are in.
+          
+          ${recentChatHistory}`
+        },
+        {
+          "role": "user",
+          "content": `${prompt}`
+        }
+      ]
+    });
+    
       const myData = result;  // Assign the data to a variable
       console.log("Data received:", myData);
     
