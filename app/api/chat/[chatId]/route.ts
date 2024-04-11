@@ -108,32 +108,12 @@ export async function POST(
 
     
     console.log("Calling Replicate model")
-    const result = await callOpenAI3_5_turbo(process.env.OPENAI_API_KEY!, {
-      "model": "gpt-3.5-turbo",
-      "top_p": 0.95,
-      "temperature": 0.75,
-      "max_tokens": 256,
-      "frequency_penalty": 1.1,
-      "messages": [
-        {
-          "role": "system",
-          "content": `ONLY generate plain sentences without prefix of who is speaking. DO NOT use ${companion.name}: prefix.
-          
-          ${companion.instructions}
-
-          Below are relevant details about ${companion.name}'s past and the conversation you are in.
-          
-          ${recentChatHistory}`
-        },
-        {
-          "role": "user",
-          "content": `${prompt}`
-        }
-      ]
+    const result = await callOpenAI3_5_turbo("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjg1Njg3OSwianRpIjoiODliYWU0MmMtZWZlMC00NDY0LWE3YjYtYTg2YWZlZTZhMmE1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3RfMTIzQG1haWxpbmF0b3IuY29tIiwibmJmIjoxNzEyODU2ODc5LCJjc3JmIjoiNzdmYzRjZTktNzA1NS00ZWE4LTg0NmMtZDUwNmY4YjA2ZTdjIiwiZXhwIjoxNzEyODU3Nzc5fQ.82xd2bm_f2TY7mGiso7hGhDu4xylLDxSr6JUy-iuSCo", {
+      "parentTenantId": 1710482887913,
+      "details": false
     });
 
-    console.log("Data received");
-    const myData = result.json();  // Assign the data to a variable
+    const myData = result;  // Assign the data to a variable
     console.log("Data received:", myData);
   
     console.log("inside Replicate...")
