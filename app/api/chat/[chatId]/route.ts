@@ -132,7 +132,7 @@ export async function POST(
       ]
     });
 
-    const myData = result;  // Assign the data to a variable
+    const myData = result.json();  // Assign the data to a variable
     console.log("Data received:", myData);
   
     console.log("inside Replicate...")
