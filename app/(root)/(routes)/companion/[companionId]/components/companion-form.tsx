@@ -223,7 +223,7 @@ export const CompanionForm = ({
           />
           <div className="w-full flex justify-center">
             <Button size="lg" disabled={isLoading}>
-              {initialData ? "Edit your companion" : "Create your companion"}
+              {initialData ? "Edit your Buddy" : "Create your Buddy"}
               <Wand2 className="w-4 h-4 ml-2" />
             </Button>
           </div>
