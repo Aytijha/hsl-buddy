@@ -106,9 +106,12 @@ export async function POST(
     // Turn verbose on for debugging
     model.verbose = true;
 
+    console.log(recentChatHistory)
+    const contentseed = "ONLY generate plain sentences without prefix of who is speaking. DO NOT use"+companion.name+": prefix. \n\n"+companion.instructions+"\n\n"+"Below are relevant details about "+companion.name+"'s past and the conversation you are in.\n\n"+recentChatHistory
+    console.log(contentseed)
     
     console.log("Calling Replicate model")
-    const result = await callOpenAI3_5_turbo("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjg1Njg3OSwianRpIjoiODliYWU0MmMtZWZlMC00NDY0LWE3YjYtYTg2YWZlZTZhMmE1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3RfMTIzQG1haWxpbmF0b3IuY29tIiwibmJmIjoxNzEyODU2ODc5LCJjc3JmIjoiNzdmYzRjZTktNzA1NS00ZWE4LTg0NmMtZDUwNmY4YjA2ZTdjIiwiZXhwIjoxNzEyODU3Nzc5fQ.82xd2bm_f2TY7mGiso7hGhDu4xylLDxSr6JUy-iuSCo", {
+    const result = await callOpenAI3_5_turbo("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxMjg1ODIxMywianRpIjoiNzVhMmU5YjgtNTQxNS00OWVjLThmZGQtOGRhZmUxOWMzYzc5IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3RfMTIzQG1haWxpbmF0b3IuY29tIiwibmJmIjoxNzEyODU4MjEzLCJjc3JmIjoiNmE3OGRjZjItN2EwYS00MTM3LWI2MzctMzliNWY0MTQ1OGM3IiwiZXhwIjoxNzEyODU5MTEzfQ.KOC6vR5uhc51ZUvJfzTkBDvs1KdrxzrGyCB5XihHP7k", {
       "parentTenantId": 1710482887913,
       "details": false
     });
