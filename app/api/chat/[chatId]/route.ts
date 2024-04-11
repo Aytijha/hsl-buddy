@@ -128,7 +128,7 @@ export async function POST(
     });
     
     const myData = result;  // Assign the data to a variable
-    console.log("Data received:", myData);
+    console.log("Data received:", myData['choices']);
     
     console.log("Calling Replicate model")
     const resp = String(
