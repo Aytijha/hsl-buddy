@@ -131,11 +131,11 @@ export async function POST(
         }
       ]
     });
-    
-      const myData = result;  // Assign the data to a variable
-      console.log("Data received:", myData);
-    
-      console.log("inside Replicate...")
+
+    const myData = result;  // Assign the data to a variable
+    console.log("Data received:", myData);
+  
+    console.log("inside Replicate...")
     const resp = String(
       await model
         .call(
