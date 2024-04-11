@@ -132,6 +132,7 @@ export async function POST(
       ]
     });
 
+    console.log("Data received");
     const myData = result.json();  // Assign the data to a variable
     console.log("Data received:", myData);
   
