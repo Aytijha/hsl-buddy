@@ -126,32 +126,31 @@ export async function POST(
         }
       ]
     });
-    
-    const myData = result;  // Assign the data to a variable
-    console.log("Data received:", myData['choices'][0]['message']['content']);
+
+    const response = result['choices'][0]['message']['content'];
     
     console.log("Calling Replicate model")
-    const resp = String(
-      await model
-        .call(
-          `
-        ONLY generate plain sentences without prefix of who is speaking. DO NOT use ${companion.name}: prefix. 
+    // const resp = String(
+    //   await model
+    //     .call(
+    //       `
+    //     ONLY generate plain sentences without prefix of who is speaking. DO NOT use ${companion.name}: prefix. 
 
-        ${companion.instructions}
+    //     ${companion.instructions}
 
-        Below are relevant details about ${companion.name}'s past and the conversation you are in.
-        ${relevantHistory}
+    //     Below are relevant details about ${companion.name}'s past and the conversation you are in.
+    //     ${relevantHistory}
 
 
-        ${recentChatHistory}\n${companion.name}:`
-        )
-        .catch(console.error)
-    );
-    console.log("Resp: ", resp)
+    //     ${recentChatHistory}\n${companion.name}:`
+    //     )
+    //     .catch(console.error)
+    // );
+    // console.log("Resp: ", resp)
 
-    const cleaned = resp.replaceAll(",", "");
-    const chunks = cleaned.split("\n");
-    const response = chunks[0];
+    // const cleaned = resp.replaceAll(",", "");
+    // const chunks = cleaned.split("\n");
+    // const response = chunks[0];
 
     await memoryManager.writeToHistory("" + response.trim(), companionKey);
     var Readable = require("stream").Readable;
