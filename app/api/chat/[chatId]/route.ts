@@ -8,6 +8,7 @@ import { NextResponse } from "next/server";
 import { MemoryManager } from "@/lib/memory";
 import { rateLimit } from "@/lib/rate-limit";
 import prismadb from "@/lib/prismadb";
+import callOpenAI3_5_turbo from "@/lib/openaicall";
 
 dotenv.config({ path: `.env` });
 
@@ -105,7 +106,18 @@ export async function POST(
     // Turn verbose on for debugging
     model.verbose = true;
 
+    
     console.log("Calling Replicate model")
+    const result = await callOpenAI3_5_turbo('abc', {
+          "bypass": {
+          "bypassAi": true,
+          "bypassTranslate": true
+          }
+      });
+      const myData = result;  // Assign the data to a variable
+      console.log("Data received:", myData);
+    
+      console.log("inside Replicate...")
     const resp = String(
       await model
         .call(
