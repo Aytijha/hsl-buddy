@@ -132,7 +132,7 @@ export const CompanionForm = ({
                     <Input disabled={isLoading} placeholder="Albert Einstein" {...field} />
                   </FormControl>
                   <FormDescription>
-                    This is how your HSL Buddy will be named.
+                    This is how your Buddy will be named.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -148,7 +148,7 @@ export const CompanionForm = ({
                     <Input disabled={isLoading} placeholder="Theoretical Physicist" {...field} />
                   </FormControl>
                   <FormDescription>
-                    Short description for your HSL Buddy
+                    Short description for your Buddy
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -215,7 +215,7 @@ export const CompanionForm = ({
                   <Textarea disabled={isLoading} rows={7} className="bg-background resize-none" placeholder={SEED_CHAT} {...field} />
                 </FormControl>
                 <FormDescription>
-                  Write couple of examples of a human chatting with your HSL Buddy, write expected answers.
+                  Write couple of examples of a human chatting with your Buddy, write expected answers.
                 </FormDescription>
                 <FormMessage />
               </FormItem>

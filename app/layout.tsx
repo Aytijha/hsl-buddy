@@ -12,7 +12,7 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'HSL-buddy',
+  title: 'Buddy',
   description: 'Your AI buddy from HyperSkills Lab.',
 }
 

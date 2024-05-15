@@ -46,7 +46,7 @@ export async function GET() {
             currency: "USD",
             product_data: {
               name: "HyperSkills Lab Pro",
-              description: "Create Custom AI HSL-Buddy"
+              description: "Create Custom AI Buddy"
             },
             unit_amount: 999,
             recurring: {
