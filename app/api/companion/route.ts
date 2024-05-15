@@ -10,6 +10,9 @@ export async function POST(req: Request) {
     const user = await currentUser();
     const { src, name, description, instructions, seed, categoryId } = body;
 
+    console.log(user);
+    console.log(user.id);
+
     if (!user || !user.id || !user.firstName) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
