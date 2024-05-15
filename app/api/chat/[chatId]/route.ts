@@ -106,14 +106,14 @@ export async function POST(
     // Turn verbose on for debugging
     model.verbose = true;
 
-    const contentseed = "ONLY generate plain sentences without prefix of who is speaking. DO NOT use"+companion.name+": prefix. \n\n"+companion.instructions+"\n\n"+"Below are relevant details about "+companion.name+"'s past and the conversation you are in.\n\n"+recentChatHistory
+    const contentseed = "ONLY generate sentences without prefix of who is speaking. DO NOT use"+companion.name+": prefix. \n\n Use resources across the internet to improve your answer if applicable. And try NOT to be repititive with the responses you give. Also do not use the exact same sentences used earlier in the chat. Be creative, but do not propagate any false information. \n\n"+companion.instructions+"\n\n"+"Below are relevant details about "+companion.name+"'s past and the conversation you are in.\n\n"+recentChatHistory
 
     console.log(contentseed)
     console.log(prompt)
     
     console.log("Calling OpenAI API")
     const result = await callOpenAI3_5_turbo(process.env.OPENAI_API_KEY!, {
-      "model": "gpt-3.5-turbo",
+      "model": "gpt-4o",
       "top_p": 0.95,
       "temperature": 0.75,
       "max_tokens": 256,
