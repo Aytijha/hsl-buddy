@@ -9,9 +9,11 @@ async function main() {
         { name: 'Famous People' },
         { name: 'Movies & TV' },
         { name: 'Musicians' },
-        { name: 'Games' },
-        { name: 'Philosophy' },
+        { name: 'Nurses' },
+        { name: 'Front Desk' },
+        { name: 'Logistics' },
         { name: 'Scientists' },
+        { name: 'Sous Chef' },
       ],
     });
   } catch (error) {
