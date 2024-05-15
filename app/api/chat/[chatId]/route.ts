@@ -107,6 +107,9 @@ export async function POST(
     model.verbose = true;
 
     const contentseed = "ONLY generate plain sentences without prefix of who is speaking. DO NOT use"+companion.name+": prefix. \n\n"+companion.instructions+"\n\n"+"Below are relevant details about "+companion.name+"'s past and the conversation you are in.\n\n"+recentChatHistory
+
+    console.log(contentseed)
+    console.log(prompt)
     
     console.log("Calling OpenAI API")
     const result = await callOpenAI3_5_turbo(process.env.OPENAI_API_KEY!, {
